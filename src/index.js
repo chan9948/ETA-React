@@ -48,10 +48,11 @@ const initData = (THIS, targetName, url) => {
 class App extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            routes: [],
-            stops: [],
-            mappings: [],
+            routes: null,
+            stops: null,
+            mappings: null,
         }
     }
     componentDidMount() {
@@ -64,7 +65,7 @@ class App extends React.Component {
     render() {
         return (
             <>
-                <SelectorPanel routes={this.state.routes}></SelectorPanel>
+                {this.state.routes?<SelectorPanel routes={this.state.routes} stops={this.state.stops} mappings={this.state.mappings}></SelectorPanel>:""}
                 {/* <TrackList></TrackList> */}
             </>
         );
