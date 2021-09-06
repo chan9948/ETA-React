@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 import TrackItem from "./TrackItem";
+import SelectorPanel from "./SelectorPanel";
+// import TrackList from "./TrackList";
 
 const routesUrl = "https://data.etabus.gov.hk/v1/transport/kmb/route/";
 const stopsUrl = "https://data.etabus.gov.hk/v1/transport/kmb/stop"
@@ -50,14 +52,6 @@ class App extends React.Component {
             routes: [],
             stops: [],
             mappings: [],
-
-            showRoutes: [],
-            showStops: [],
-
-            selectedRoute: {},
-            selectedstop: {},
-
-
         }
     }
     componentDidMount() {
@@ -70,7 +64,8 @@ class App extends React.Component {
     render() {
         return (
             <>
-                <TrackItem></TrackItem>
+                <SelectorPanel routes={this.state.routes}></SelectorPanel>
+                {/* <TrackList></TrackList> */}
             </>
         );
     }
