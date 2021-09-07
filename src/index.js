@@ -111,7 +111,7 @@ class App extends React.Component {
                 }
             })
             // console.log(tmpTracks);
-            this.setState({tracks: tmpTracks},()=>{notifyInfo("removed " + removeTrackRoute + " track")});
+            this.setState({tracks: tmpTracks},()=>{window.localStorage.setItem("tracks", JSON.stringify(this.state.tracks));notifyInfo("removed " + removeTrackRoute + " track")});
         }
         return (
                 <>
