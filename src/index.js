@@ -115,9 +115,9 @@ class App extends React.Component {
         }
         return (
                 <>
-                <code>right-click card to remove</code>
+                <code>Right-click card to remove</code>
                 <br />
-                <code>refresh rate: 10s</code>
+                <code>Refresh rate: 10s</code>
                 {this.state.routes ? <SelectorPanel addTrack={addTrack} routes={this.state.routes} stops={this.state.stops} mappings={this.state.mappings}></SelectorPanel> : ""}
                 <TrackList tracks={this.state.tracks} removeTrack={removeTrack}></TrackList>
                 <ToastContainer

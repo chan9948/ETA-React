@@ -65,7 +65,8 @@ class SelectorPanel extends React.Component {
         }
         return (
             <div>
-                <Select value={this.state.routeValue} options={this.state.showRoutes} onChange={(e) => { handleRouteChange(e) }}></Select>
+                <p>test5</p>
+                <Select value={this.state.routeValue} options={this.state.showRoutes} onChange={(e) => { handleRouteChange(e) }} ></Select>
                 <Select value={this.state.stopValue} options={this.state.showStops} onChange={(e) => { handleStopChange(e) }}></Select>
                 <Button disabled={this.state.selectedRoute == null || this.state.selectedStop == null} style={{ width: '100%' }} variant="outlined" onClick={(e) => { handleAddTrack(e) }}>Add</Button>
             </div>
