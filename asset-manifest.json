@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/eta-react/static/css/main.c8081e4c.chunk.css",
-    "main.js": "/eta-react/static/js/main.39ad15f3.chunk.js",
-    "main.js.map": "/eta-react/static/js/main.39ad15f3.chunk.js.map",
+    "main.js": "/eta-react/static/js/main.d2e90727.chunk.js",
+    "main.js.map": "/eta-react/static/js/main.d2e90727.chunk.js.map",
     "runtime-main.js": "/eta-react/static/js/runtime-main.e5f7e235.js",
     "runtime-main.js.map": "/eta-react/static/js/runtime-main.e5f7e235.js.map",
     "static/css/2.0975cee1.chunk.css": "/eta-react/static/css/2.0975cee1.chunk.css",
-    "static/js/2.b2363d94.chunk.js": "/eta-react/static/js/2.b2363d94.chunk.js",
-    "static/js/2.b2363d94.chunk.js.map": "/eta-react/static/js/2.b2363d94.chunk.js.map",
+    "static/js/2.e378e7f6.chunk.js": "/eta-react/static/js/2.e378e7f6.chunk.js",
+    "static/js/2.e378e7f6.chunk.js.map": "/eta-react/static/js/2.e378e7f6.chunk.js.map",
     "index.html": "/eta-react/index.html",
     "static/css/2.0975cee1.chunk.css.map": "/eta-react/static/css/2.0975cee1.chunk.css.map",
     "static/css/main.c8081e4c.chunk.css.map": "/eta-react/static/css/main.c8081e4c.chunk.css.map",
-    "static/js/2.b2363d94.chunk.js.LICENSE.txt": "/eta-react/static/js/2.b2363d94.chunk.js.LICENSE.txt"
+    "static/js/2.e378e7f6.chunk.js.LICENSE.txt": "/eta-react/static/js/2.e378e7f6.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.e5f7e235.js",
     "static/css/2.0975cee1.chunk.css",
-    "static/js/2.b2363d94.chunk.js",
+    "static/js/2.e378e7f6.chunk.js",
     "static/css/main.c8081e4c.chunk.css",
-    "static/js/main.39ad15f3.chunk.js"
+    "static/js/main.d2e90727.chunk.js"
   ]
 }
