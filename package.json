@@ -15,6 +15,7 @@
         "react-toastify": "^8.0.2",
         "web-vitals": "^1.1.2"
     },
+    "homepage": "https://chan9948.github.io/eta-react/",
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",

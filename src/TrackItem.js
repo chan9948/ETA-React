@@ -21,10 +21,10 @@ class TrackItem extends React.Component {
                     data.forEach((record) => {
                         if (record.dir === this.props.track.bound) {
                             let tmpEta = Math.round((new Date(record.eta) - now) / 1000 / 60);
-                            if(tmpEta >= 0){
+                            if (tmpEta >= 0) {
                                 tmpEtas.push(tmpEta)
                             }
-                                                    }
+                        }
                     });
                     if (tmpEtas.length === 0) {
                         tmpEtas.push("no car");
@@ -39,7 +39,7 @@ class TrackItem extends React.Component {
     }
     render() {
         return (
-            <div onContextMenu={()=>{this.props.removeTrack(this.props.track.url)}} style={{ fontSize:"10px", marginBottom: "10px", borderRadius: "12px", aspectRatio: "4/1", width: "100%", maxWidth: "12cm", backgroundColor: "lightsteelblue", display: "flex", flexDirection: "row" }}> {/*a card*/}
+            <div onContextMenu={() => { this.props.removeTrack(this.props.track.url) }} style={{ fontSize: "10px", marginBottom: "10px", borderRadius: "12px", aspectRatio: "4/1", width: "100%", maxWidth: "12cm", backgroundColor: "lightsteelblue", display: "flex", flexDirection: "row" }}> {/*a card*/}
                 <div style={{ width: "20%", margin: "2.5%", backgroundColor: "lightgray", borderRadius: "50%", aspectRatio: "1/1", display: "flex", justifyContent: "center", alignItems: "center" }}>{/*left section*/}
                     <div style={{ padding: "10%", fontSize: "1.5em", aspectRatio: "1/1" }}>{this.props.track.route}</div>
                 </div>
