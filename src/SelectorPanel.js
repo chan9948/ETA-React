@@ -1,6 +1,8 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
 import Select from 'react-select'
+import Button from '@material-ui/core/Button';
+
 
 class SelectorPanel extends React.Component {
     constructor(props) {
@@ -14,6 +16,9 @@ class SelectorPanel extends React.Component {
 
             selectedRoute: null,
             selectedStop: null,
+
+            routeValue: null,
+            stopValue: null,
         }
     }
     componentDidMount() {
@@ -26,11 +31,11 @@ class SelectorPanel extends React.Component {
         this.setState({ showRoutes: tmpShowRoutes }, (() => { console.log("loading end") }));
     }
     render() {
-        const handleRouteChange = (route) => {
+        const handleRouteChange = (e) => {
             let tmpShowStops = [];
             this.props.mappings.forEach((mapping) => {
                 // console.log(mapping);
-                if (mapping.route === route.route && mapping.bound === route.bound) {
+                if (mapping.route === e.value.route && mapping.bound === e.value.bound) {
                     this.props.stops.forEach((stop) => {
                         if (mapping.stop === stop.stop) {
                             tmpShowStops.push({ value: stop, label: stop.name_tc });
@@ -38,12 +43,31 @@ class SelectorPanel extends React.Component {
                     })
                 }
             })
-            this.setState({ showStops: tmpShowStops });
+            this.setState({
+                showStops: tmpShowStops,
+                stopValue: null,
+                selectedStop: null,
+                selectedRoute: e.value,
+                routeValue: [{ value: e.value, label: e.label }]
+            });
+        }
+        const handleStopChange = (e) => {
+            this.setState({ selectedStop: e.value, stopValue: [{ value: e.value, label: e.label }] })
+        }
+        const handleAddTrack = () => {
+            this.props.addTrack(this.state.selectedRoute, this.state.selectedStop);
+            this.setState({
+                selectedRoute: null,
+                selectedStop: null,
+                routeValue: null,
+                stopValue: null,
+            });
         }
         return (
             <div>
-                <Select options={this.state.showRoutes} onChange={(e) => { this.setState({ selectedRoute: e.value }); handleRouteChange(e.value) }}></Select>
-                <Select options={this.state.showStops} onChange={(e) => { this.setState({ selectedStop: e.value }) }}></Select>
+                <Select value={this.state.routeValue} options={this.state.showRoutes} onChange={(e) => { handleRouteChange(e) }}></Select>
+                <Select value={this.state.stopValue} options={this.state.showStops} onChange={(e) => { handleStopChange(e) }}></Select>
+                <Button disabled={this.state.selectedRoute == null || this.state.selectedStop == null} style={{ width: '100%' }} variant="outlined" onClick={(e) => { handleAddTrack(e) }}>Add</Button>
             </div>
         )
     }
