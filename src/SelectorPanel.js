@@ -70,7 +70,6 @@ class SelectorPanel extends React.Component {
         }
         return (
             <div>
-                <p>test5</p>
                 <Autocomplete
                     options={this.state.showRoutes}
                     getOptionLabel={(option) => option.label}
@@ -85,8 +84,6 @@ class SelectorPanel extends React.Component {
                     onChange={(e, newValue) => { handleStopChange(newValue) }}
                     value={this.state.stopValue}
                 ></Autocomplete>
-                {/* <Select value={this.state.routeValue} options={this.state.showRoutes} onChange={(e) => { handleRouteChange(e) }} ></Select>
-                <Select value={this.state.stopValue} options={this.state.showStops} onChange={(e) => { handleStopChange(e) }}></Select> */}
                 <Button disabled={this.state.selectedRoute == null || this.state.selectedStop == null} style={{ width: '100%' }} variant="outlined" onClick={(e) => { handleAddTrack(e) }}>Add</Button>
             </div>
         )
