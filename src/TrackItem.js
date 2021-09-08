@@ -56,8 +56,8 @@ class TrackItem extends React.Component {
                             <div style={{ backgroundColor: "lightblue", padding: "2.5px 5px", borderRadius: "7.5px" }}>12</div>
                             <div style={{ backgroundColor: "lightblue", padding: "2.5px 5px", borderRadius: "7.5px" }}>12</div> */}
                             {
-                                this.state.etas.map((eta) => (
-                                    <div style={{ backgroundColor: "lightblue", padding: "2.5px 5px", borderRadius: "7.5px" }}>{eta}</div>
+                                this.state.etas.map((eta, index) => (
+                                    <div key={index} style={{ backgroundColor: "lightblue", padding: "2.5px 5px", borderRadius: "7.5px" }}>{eta}</div>
                                 ))
                             }
                         </div>

@@ -52,7 +52,10 @@ class SelectorPanel extends React.Component {
             });
         }
         const handleStopChange = (e) => {
-            this.setState({ selectedStop: e.value, stopValue: [{ value: e.value, label: e.label }] })
+            this.setState({
+                selectedStop: e.value,
+                stopValue: [{ value: e.value, label: e.label }]
+            })
         }
         const handleAddTrack = () => {
             this.props.addTrack(this.state.selectedRoute, this.state.selectedStop);

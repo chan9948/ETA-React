@@ -88,7 +88,7 @@ class App extends React.Component {
                 // console.log(newTrack);
                 let alreadyExists = false;
                 this.state.tracks.forEach(track => {
-                    if (track.url === newTrack.url) {
+                    if (track.url === newTrack.url && track.bound === newTrack.bound) {
                         alreadyExists = true;
                     }
                 });
@@ -101,44 +101,50 @@ class App extends React.Component {
                 //err
             }
         }
-        const removeTrack = (url) =>{
+        const removeTrack = (url) => {
             let tmpTracks = JSON.parse(JSON.stringify(this.state.tracks));
             let removeTrackRoute;
-            tmpTracks.forEach((track) =>{
-                if(track.url === url) {
-                    removeTrackRoute = track.route;
-                    tmpTracks.splice(tmpTracks.indexOf(track),1);
-                }
-            })
-            // console.log(tmpTracks);
-            this.setState({tracks: tmpTracks},()=>{window.localStorage.setItem("tracks", JSON.stringify(this.state.tracks));notifyInfo("removed " + removeTrackRoute + " track")});
+            tmpTracks.forEach((track) => {
+                    if (track.url === url) {
+                        removeTrackRoute = track.route;
+                        tmpTracks.splice(tmpTracks.indexOf(track), 1);
+                    }
+                })
+                // console.log(tmpTracks);
+            this.setState({ tracks: tmpTracks }, () => {
+                window.localStorage.setItem("tracks", JSON.stringify(this.state.tracks));
+                notifyInfo("removed " + removeTrackRoute + " track")
+            });
         }
-        return (
-                <>
-                <code>Right-click card to remove</code>
-                <br />
-                <code>Refresh rate: 10s</code>
-                {this.state.routes ? <SelectorPanel addTrack={addTrack} routes={this.state.routes} stops={this.state.stops} mappings={this.state.mappings}></SelectorPanel> : ""}
-                <TrackList tracks={this.state.tracks} removeTrack={removeTrack}></TrackList>
-                <ToastContainer
-                    position="bottom-center"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                />
-            </>
+        return ( <
+            >
+            <
+            code > Right - click card to remove < /code> <
+            br / >
+            <
+            code > Refresh rate: 10 s < /code> {
+            this.state.routes ? < SelectorPanel addTrack = { addTrack }
+            routes = { this.state.routes }
+            stops = { this.state.stops }
+            mappings = { this.state.mappings } > < /SelectorPanel> : ""} <
+            TrackList tracks = { this.state.tracks }
+            removeTrack = { removeTrack } > < /TrackList> <
+            ToastContainer position = "bottom-center"
+            autoClose = { 5000 }
+            hideProgressBar = { false }
+            newestOnTop = { false }
+            closeOnClick rtl = { false }
+            pauseOnFocusLoss draggable pauseOnHover /
+            >
+            <
+            />
         );
     }
 }
 
 // ========================================
 
-ReactDOM.render(<
-    App />,
+ReactDOM.render( <
+    App / > ,
     document.getElementById('root')
 );
