@@ -2,6 +2,8 @@ import React from 'react';
 // import ReactDOM from 'react-dom';
 import Select from 'react-select'
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 
 class SelectorPanel extends React.Component {
@@ -48,13 +50,13 @@ class SelectorPanel extends React.Component {
                 stopValue: null,
                 selectedStop: null,
                 selectedRoute: e.value,
-                routeValue: [{ value: e.value, label: e.label }]
+                routeValue: { value: e.value, label: e.label }
             });
         }
         const handleStopChange = (e) => {
             this.setState({
                 selectedStop: e.value,
-                stopValue: [{ value: e.value, label: e.label }]
+                stopValue: { value: e.value, label: e.label }
             })
         }
         const handleAddTrack = () => {
@@ -69,8 +71,22 @@ class SelectorPanel extends React.Component {
         return (
             <div>
                 <p>test5</p>
-                <Select value={this.state.routeValue} options={this.state.showRoutes} onChange={(e) => { handleRouteChange(e) }} ></Select>
-                <Select value={this.state.stopValue} options={this.state.showStops} onChange={(e) => { handleStopChange(e) }}></Select>
+                <Autocomplete
+                    options={this.state.showRoutes}
+                    getOptionLabel={(option) => option.label}
+                    renderInput={(params) => <TextField {...params} label="Route" variant="outlined" />}
+                    onChange={(e, newValue) => { handleRouteChange(newValue) }}
+                    value={this.state.routeValue}
+                ></Autocomplete>
+                <Autocomplete
+                    options={this.state.showStops}
+                    getOptionLabel={(option) => option.label}
+                    renderInput={(params) => <TextField {...params} label="Stop" variant="outlined" />}
+                    onChange={(e, newValue) => { handleStopChange(newValue) }}
+                    value={this.state.stopValue}
+                ></Autocomplete>
+                {/* <Select value={this.state.routeValue} options={this.state.showRoutes} onChange={(e) => { handleRouteChange(e) }} ></Select>
+                <Select value={this.state.stopValue} options={this.state.showStops} onChange={(e) => { handleStopChange(e) }}></Select> */}
                 <Button disabled={this.state.selectedRoute == null || this.state.selectedStop == null} style={{ width: '100%' }} variant="outlined" onClick={(e) => { handleAddTrack(e) }}>Add</Button>
             </div>
         )
