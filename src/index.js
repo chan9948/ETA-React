@@ -20,38 +20,6 @@ const fetchData = (url) => {
         )
 }
 
-const initData = (THIS, targetName, url) => {
-    let ls = window.localStorage;
-    let item = ls.getItem(targetName)
-    if (item) {
-        console.log("load " + targetName + " from localStorage");
-        THIS.setState({
-            [targetName]: JSON.parse(item)
-        })
-    } else {
-        if (url) {
-            console.log("load " + targetName + " from internet");
-            fetchData(url).then(
-                (json) => {
-                    let data = json.data;
-                    ls.setItem(targetName, JSON.stringify(data));
-                    THIS.setState({
-                        [targetName]: data
-                    })
-                }
-            );
-        } else {
-            console.log("store empty " + targetName + " to localStorage");
-            let data = [];
-            THIS.setState({
-                [targetName]: data
-            })
-            ls.setItem(targetName, JSON.stringify(data));
-        }
-    }
-    return Promise.resolve();
-}
-
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -62,14 +30,66 @@ class App extends React.Component {
             mappings: null,
 
             tracks: null,
+
+            debug: false,
+            debugText: "init",
         }
     }
     componentDidMount() {
+        const initData = (targetName, url) => {
+            let ls = window.localStorage;
+            let item = ls.getItem("eta-react-" + targetName)
+            if (item) {
+                console.log("load " + targetName + " from localStorage");
+                this.setState({
+                    [targetName]: JSON.parse(item)
+                })
+            } else {
+                if (url) {
+                    console.log("load " + targetName + " from internet");
+                    fetchData(url).then(
+                        (json) => {
+                            let data = json.data;
+                            let dict = {};
+                            if (targetName === "routes") {
+                                data.forEach((route) => {
+                                    dict[route.route + "&" + route.bound] = route;
+                                })
+                            }
+                            if (targetName === "stops") {
+                                data.forEach((stop) => {
+                                    dict[stop.stop] = stop;
+                                })
+                            }
+                            if (targetName === "mappings") {
+                                data.forEach((mapping) => {
+                                    if (!dict[mapping.route + "&" + mapping.bound]) {
+                                        dict[mapping.route + "&" + mapping.bound] = [];
+                                    }
+                                    dict[mapping.route + "&" + mapping.bound].push(mapping);
+                                })
+                            }
+                            ls.setItem("eta-react-" + targetName, JSON.stringify(dict));
+                            this.setState({
+                                [targetName]: dict
+                            })
+                        }
+                    );
+                } else {
+                    console.log("store empty " + targetName + " to localStorage");
+                    let data = [];
+                    this.setState({
+                        [targetName]: data
+                    })
+                    ls.setItem("eta-react-" + targetName, JSON.stringify(data));
+                }
+            }
+        }
         //init
-        initData(this, "routes", routesUrl).then(() => { this.setState({ showRoutes: this.state.routes }) });
-        initData(this, "stops", stopsUrl).then(() => { this.setState({ showStops: this.state.stops }) });
-        initData(this, "mappings", mappingsUrl);
-        initData(this, "tracks", null);
+        initData("routes", routesUrl);
+        initData("stops", stopsUrl);
+        initData("mappings", mappingsUrl);
+        initData("tracks", null);
     }
     render() {
         const notifyInfo = (msg) => toast.info(msg);
@@ -93,7 +113,7 @@ class App extends React.Component {
                     }
                 });
                 if (!alreadyExists) {
-                    this.setState({ tracks: [...this.state.tracks, newTrack] }, () => { window.localStorage.setItem("tracks", JSON.stringify(this.state.tracks)) });
+                    this.setState({ tracks: [...this.state.tracks, newTrack] }, () => { window.localStorage.setItem("eta-react-tracks", JSON.stringify(this.state.tracks)) });
                 } else {
                     notifyWarn("track already exists");
                 }
@@ -105,46 +125,82 @@ class App extends React.Component {
             let tmpTracks = JSON.parse(JSON.stringify(this.state.tracks));
             let removeTrackRoute;
             tmpTracks.forEach((track) => {
-                    if (track.url === url) {
-                        removeTrackRoute = track.route;
-                        tmpTracks.splice(tmpTracks.indexOf(track), 1);
-                    }
-                })
-                // console.log(tmpTracks);
+                if (track.url === url) {
+                    removeTrackRoute = track.route;
+                    tmpTracks.splice(tmpTracks.indexOf(track), 1);
+                }
+            })
+            // console.log(tmpTracks);
             this.setState({ tracks: tmpTracks }, () => {
-                window.localStorage.setItem("tracks", JSON.stringify(this.state.tracks));
+                window.localStorage.setItem("eta-react-tracks", JSON.stringify(this.state.tracks));
                 notifyInfo("removed " + removeTrackRoute + " track")
             });
         }
-        return ( <
-            >
-            <
-            code > Right - click card to remove < /code> <
-            br / >
-            <
-            code > Refresh rate: 10 s < /code> {
-            this.state.routes ? < SelectorPanel addTrack = { addTrack }
-            routes = { this.state.routes }
-            stops = { this.state.stops }
-            mappings = { this.state.mappings } > < /SelectorPanel> : ""} <
-            TrackList tracks = { this.state.tracks }
-            removeTrack = { removeTrack } > < /TrackList> <
-            ToastContainer position = "bottom-center"
-            autoClose = { 5000 }
-            hideProgressBar = { false }
-            newestOnTop = { false }
-            closeOnClick rtl = { false }
-            pauseOnFocusLoss draggable pauseOnHover /
-            >
-            <
-            />
+        return (
+            <>
+                {
+                    this.state.debug
+                        ?
+                        <>
+                            <pre>{this.state.debugText}</pre>
+                            <button onClick={() => { window.localStorage.clear(); window.location.reload(); }}>DEBUG</button>
+                            <button onClick={() => {
+                                let a, b, c;
+                                if (window.localStorage.getItem("eta-react-routes")) {
+                                    a = JSON.stringify(JSON.parse(window.localStorage.getItem("eta-react-routes"))["968&I"]);
+                                } else {
+                                    a = "eta-react-routes load error";
+                                }
+                                if (window.localStorage.getItem("eta-react-stops")) {
+                                    b = JSON.stringify(JSON.parse(window.localStorage.getItem("eta-react-stops"))["B7773ED8D2FC08E5"]);
+                                } else {
+                                    b = "eta-react-stops load error";
+                                }
+                                if (window.localStorage.getItem("eta-react-mappings")) {
+                                    c = JSON.stringify(JSON.parse(window.localStorage.getItem("eta-react-mappings"))["968&I"]);
+                                } else {
+                                    c = "eta-react-mappings load error";
+                                }
+                                this.setState({ debugText: a + "\n" + b + "\n" + c });
+                            }}>abc</button>
+                        </>
+                        :
+                        <></>
+                }
+                <div onContextMenu={(e) => { this.setState({ debug: !this.state.debug }) }}>
+                    <code> Right click (pc)/long press (mobile) track card to remove it </code>
+                    <br />
+                    <code> Refresh rate: 10s</code>
+                </div>
+                {
+                    this.state.routes
+                        ?
+                        <SelectorPanel
+                            addTrack={addTrack}
+                            routes={this.state.routes}
+                            stops={this.state.stops}
+                            mappings={this.state.mappings} />
+                        : ""
+                }
+                <TrackList
+                    tracks={this.state.tracks}
+                    removeTrack={removeTrack}
+                />
+                <ToastContainer position="bottom-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick rtl={false}
+                    pauseOnFocusLoss draggable pauseOnHover
+                />
+            </>
         );
     }
 }
 
 // ========================================
 
-ReactDOM.render( <
-    App / > ,
+ReactDOM.render(<
+    App />,
     document.getElementById('root')
 );

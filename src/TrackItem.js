@@ -41,7 +41,7 @@ class TrackItem extends React.Component {
         return (
             <div onContextMenu={() => { this.props.removeTrack(this.props.track.url) }} style={{ fontSize: "10px", marginBottom: "10px", borderRadius: "12px", aspectRatio: "4/1", width: "100%", maxWidth: "12cm", backgroundColor: "lightsteelblue", display: "flex", flexDirection: "row" }}> {/*a card*/}
                 <div style={{ width: "20%", margin: "2.5%", backgroundColor: "lightgray", borderRadius: "50%", aspectRatio: "1/1", display: "flex", justifyContent: "center", alignItems: "center" }}>{/*left section*/}
-                    <div style={{ padding: "10%", fontSize: "1.5em", aspectRatio: "1/1" }}>{this.props.track.route}</div>
+                    <div style={{ padding: "10%", fontSize: "1.5em"}}>{this.props.track.route}</div>
                 </div>
                 <div style={{ width: "75%", aspectRatio: "3/1" }}>{/*right section*/}
                     <div style={{ aspectRatio: "6/1", display: "flex", justifyContent: "center", alignItems: "center" }}>{/*right top*/}
